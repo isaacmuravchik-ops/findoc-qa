@@ -2,8 +2,8 @@ import streamlit as st
 from ingest import extract_text, chunk_text, build_index
 from rag import answer_question
 
-st.set_page_config(page_title="FinDoc Q&A", page_icon="📄")
-st.title("📄 FinDoc Q&A")
+st.set_page_config(page_title="FinDoc Q&A (by Isaac Muravchik)", page_icon="📄")
+st.title("📄 FinDoc Q&A (by Isaac Muravchik)")
 st.caption("Upload a financial document and ask questions — answers come with page citations.")
 
 uploaded = st.file_uploader("Upload a PDF (e.g., a 10-K)", type="pdf")
@@ -25,5 +25,5 @@ if uploaded:
         with st.spinner("Thinking…"):
             answer, pages = answer_question(st.session_state.collection, question)
         st.markdown("### Answer")
-        st.write(answer)
+        st.write(answer.replace("$", "\\$"))
         st.caption(f"Sources: pages {', '.join(map(str, pages))}")
